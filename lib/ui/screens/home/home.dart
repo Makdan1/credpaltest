@@ -50,6 +50,8 @@ class HomeState extends State<Home> {
                               ]),
                               InkWell(
                                   onTap: () {
+
+
                                     model.previousDialog(context);
                                   },
                                   child: Container(

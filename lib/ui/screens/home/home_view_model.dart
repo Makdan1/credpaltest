@@ -42,111 +42,132 @@ class HomeViewModel extends BaseModel {
     ];
   }
 
-  previousDialog(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              title: SizedBox(
-                  height: 350,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                              backgroundColor: Colors.orange.shade50,
-                              radius: 20,
-                              child: const Icon(
-                                Icons.whatshot,
-                                color: Colors.deepOrangeAccent,
-                              )),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Text(
-                            'New Workout',
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'From Previous',
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          ),
-                          Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(
-                                        15.0) //                 <--- border radius here
-                                    ),
-                              ),
-                              child: const Icon(
-                                Icons.arrow_forward_ios,
-                                size: 15,
-                              ))
-                        ],
-                      ),
-                      //This loads dummy data stated on the view model
 
-                      SizedBox(
-                          height: 200,
-                          width: Responsive.width(context),
-                          child: FutureBuilder<List<FromPrevious>>(
-                              future: exercise,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  if (snapshot.hasData) {
-                                    var loadDataList = snapshot.data;
-                                    return ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: loadDataList!.length,
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 16),
-                                        itemBuilder: (context, index) {
-                                          var loadData = loadDataList[index];
-                                          return PreviousItem(
-                                              fromPrevious: loadData);
-                                        });
-                                  } else {
-                                    return const SizedBox(
-                                      height: 0,
-                                      width: 0,
-                                    );
-                                  }
-                                }
-                                return const SizedBox(
-                                  height: 0,
-                                  width: 0,
-                                );
-                              })),
-                      InkWell(
-                        onTap: (){
-                          Navigator.pop(context);
-                        },
-                        child:
-                      Row(
-                        children: const [
-                          Icon(Icons.exit_to_app),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text('Close')
-                        ],
-                      ) ),
-                    ],
-                  )));
-        });
+  previousDialog(BuildContext context) {
+    showGeneralDialog(
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionBuilder: (context, a1, a2, widget) {
+          return Transform.scale(
+              scale: a1.value,
+              child: Opacity(
+                  opacity: a1.value,
+                  child:
+                  AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      title: SizedBox(
+                          height: 350,
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                      backgroundColor: Colors.orange.shade50,
+                                      radius: 20,
+                                      child: const Icon(
+                                        Icons.whatshot,
+                                        color: Colors.deepOrangeAccent,
+                                      )),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  const Text(
+                                    'New Workout',
+                                    style: TextStyle(fontWeight: FontWeight
+                                        .w500),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment
+                                    .spaceBetween,
+                                children: [
+                                  const Text(
+                                    'From Previous',
+                                    style: TextStyle(fontWeight: FontWeight
+                                        .w500),
+                                  ),
+                                  Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade200,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(
+                                                15.0) //                 <--- border radius here
+                                        ),
+                                      ),
+                                      child: const Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 15,
+                                      ))
+                                ],
+                              ),
+                              //This loads dummy data stated on the view model
+
+                              SizedBox(
+                                  height: 200,
+                                  width: Responsive.width(context),
+                                  child: FutureBuilder<List<FromPrevious>>(
+                                      future: exercise,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.done) {
+                                          if (snapshot.hasData) {
+                                            var loadDataList = snapshot.data;
+                                            return ListView.builder(
+                                                scrollDirection: Axis
+                                                    .horizontal,
+                                                itemCount: loadDataList!.length,
+                                                padding: const EdgeInsets
+                                                    .symmetric(
+                                                    vertical: 10,
+                                                    horizontal: 16),
+                                                itemBuilder: (context, index) {
+                                                  var loadData = loadDataList[index];
+                                                  return PreviousItem(
+                                                      fromPrevious: loadData);
+                                                });
+                                          } else {
+                                            return const SizedBox(
+                                              height: 0,
+                                              width: 0,
+                                            );
+                                          }
+                                        }
+                                        return const SizedBox(
+                                          height: 0,
+                                          width: 0,
+                                        );
+                                      })),
+                              InkWell(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child:
+                                  Row(
+                                    children: const [
+                                      Icon(Icons.exit_to_app),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text('Close')
+                                    ],
+                                  )),
+                            ],
+                          )))));
+        },
+        transitionDuration: const Duration(milliseconds: 300),
+        barrierDismissible: true,
+        barrierLabel: '',
+        context: context,
+        pageBuilder: (context, animation1, animation2) =>  Container(),
+
+        );
+
+
   }
 }
